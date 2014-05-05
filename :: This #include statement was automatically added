@@ -10,7 +10,7 @@ String timeStr;
 
 void setup() {
   rtc.begin(&UDPClient, "north-america.pool.ntp.org");
-  rtc.setTimeZone(-5); // gmt offset
+  rtc.setTimeZone(7); // gmt offset. I am using Malaysian time now
   Serial.begin(9600);
 }
 
@@ -18,17 +18,18 @@ void loop() {
     currentTime = rtc.now();
     if (currentTime != lastTime) {
 	// Just the time in 12 hour format
+
+	
 	timeStr = "";
+	timeStr += rtc.AMPMString(currentTime); // modified to show AM/PM here for better visibility
 	timeStr += rtc.hour12String(currentTime);
 	timeStr += ":";
 	timeStr += rtc.minuteString(currentTime);
-	timeStr += ":";
-	timeStr += rtc.secondString(currentTime);	
+	
 	timeStr += " ";	
-	timeStr += rtc.AMPMString(currentTime);
+	
 	Serial.print(timeStr);
       }
       lastTime = currentTime;
-      
 
 }
